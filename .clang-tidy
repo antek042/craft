@@ -1,4 +1,6 @@
 ---
+# readability-redundant-declaration is off: with C++20 modules it reports
+# false positives for operator new/delete declared by the standard library.
 Checks: >
   -*,
   bugprone-*,
@@ -11,6 +13,7 @@ Checks: >
   -modernize-use-trailing-return-type,
   performance-*,
   readability-*,
+  -readability-redundant-declaration,
   -readability-magic-numbers,
   -readability-identifier-length
 WarningsAsErrors: '*'

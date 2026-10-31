@@ -39,7 +39,12 @@ Module support in clangd is still experimental — start it with
    ```sh
    git clang-format main
    ```
-4. Make sure everything builds without warnings and all tests pass.
+4. Make sure everything builds without warnings and all tests pass, then run
+   the same format and clang-tidy checks as CI (needs Clang and
+   `clang-tools-extra`):
+   ```sh
+   tools/lint.sh
+   ```
 5. Open a pull request. Fill in the template and link the issue (`Closes #12`).
 
 ## Commit messages

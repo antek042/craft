@@ -14,8 +14,8 @@ class Error {
 public:
     explicit Error(std::string message, std::string hint = {});
 
-    const std::string& message() const { return message_; }
-    const std::string& hint() const { return hint_; }
+    [[nodiscard]] const std::string& message() const { return message_; }
+    [[nodiscard]] const std::string& hint() const { return hint_; }
 
     // Returns the error as printed to the terminal:
     //

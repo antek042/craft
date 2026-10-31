@@ -8,12 +8,12 @@ usable release, even if small.
 
 Goal: anyone can clone, build and test the project in under 5 minutes.
 
-- [ ] Project layout (`src/`, `tests/`, `docs/`) — see [Project layout](#project-layout)
-- [ ] CMake build for Craft itself with C++20 modules (bootstrap until Craft can build itself)
-- [ ] Test framework (Catch2 v3) wired into CTest
-- [ ] `.clang-format`, `.clang-tidy`, `.editorconfig`
-- [ ] CI: build + tests on Linux, macOS, Windows (GCC, Clang, MSVC)
-- [ ] CI: format check, clang-tidy, sanitizers (ASan + UBSan)
+- [x] Project layout (`src/`, `tests/`, `docs/`) — see [Project layout](#project-layout)
+- [x] CMake build for Craft itself with C++20 modules (bootstrap until Craft can build itself)
+- [x] Test framework (Catch2 v3) wired into CTest
+- [x] `.clang-format`, `.clang-tidy`, `.editorconfig`
+- [x] CI: build + tests on Linux, macOS, Windows (GCC, Clang, MSVC)
+- [x] CI: format check, clang-tidy, sanitizers (ASan + UBSan)
 - [ ] `CONTRIBUTING.md`, issue and PR templates, Code of Conduct
 - [ ] `good first issue` and `help wanted` labels
 
