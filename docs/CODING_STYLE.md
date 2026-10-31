@@ -125,7 +125,9 @@ Rules:
 | Files                                | `snake_case`                | `build_graph.cppm`, `build_graph.cc` |
 
 Namespaces match module names: module `craft.manifest` exports into
-`namespace craft::manifest`.
+`namespace craft::manifest`. The one exception is `craft.core`, which holds
+basic types used everywhere (`craft::Error`, `craft::kVersion`) and exports
+them directly into `namespace craft`.
 
 Names should say what something is. Avoid abbreviations unless they are widely
 known (`id`, `url`, `fs`).

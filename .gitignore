@@ -1,0 +1,8 @@
+# Build directories
+/build*/
+/out/
+
+# Editors and tools
+/.cache/
+/.vscode/
+/.idea/

@@ -59,6 +59,7 @@ craft/
 ├── src/
 │   ├── main.cc             # thin entry point, only parses args and calls into lib
 │   └── craft/              # library code, one C++ module per directory
+│       ├── core/           # module craft.core — basic types (Error, version)
 │       ├── cli/            # module craft.cli — command-line parsing and commands
 │       ├── manifest/       # module craft.manifest — craft.toml parsing and validation
 │       ├── build/          # module craft.build — build graph, compiler invocation

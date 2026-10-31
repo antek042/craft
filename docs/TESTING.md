@@ -53,6 +53,7 @@ TEST_CASE("manifest without [package] section is rejected", "[manifest]") {
 Rules:
 
 - Test name is a sentence describing behavior, not the function name.
+  Don't start it with `-` — Catch2 would read it as a command-line option.
 - Arrange / act / assert — keep these three parts visible.
 - One behavior per `TEST_CASE`. Use `SECTION` for variants of the same setup.
 - Tag tests by area (`[manifest]`, `[build]`, `[cli]`) so they can be run selectively.
