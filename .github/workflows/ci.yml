@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push to the same branch cancels the previous run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CMAKE_FLAGS: -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCRAFT_WARNINGS_AS_ERRORS=ON
+
+jobs:
+  # Linux jobs run in a Fedora container to get recent GCC and Clang.
+  linux:
+    name: Linux (${{ matrix.name }})
+    runs-on: ubuntu-24.04
+    container: fedora:44
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: GCC
+            cxx: g++
+            extra_flags: ""
+          - name: Clang
+            cxx: clang++
+            extra_flags: ""
+          - name: Clang + ASan/UBSan
+            cxx: clang++
+            extra_flags: -DCRAFT_SANITIZE=ON
+    steps:
+      - name: Install tools
+        run: >
+          dnf install -y --setopt=install_weak_deps=False
+          gcc-c++ clang compiler-rt cmake ninja-build git
+      - uses: actions/checkout@v5
+      - name: Configure
+        run: >
+          cmake -B build $CMAKE_FLAGS
+          -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} ${{ matrix.extra_flags }}
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  windows:
+    name: Windows (MSVC)
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v5
+      # Puts cl.exe, the MSVC environment and Ninja on PATH.
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Configure
+        run: cmake -B build ${{ env.CMAKE_FLAGS }} -DCMAKE_CXX_COMPILER=cl
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  macos:
+    name: macOS (Clang)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+      # Apple Clang has poor module support, so use LLVM from Homebrew.
+      - name: Install tools
+        run: brew install llvm ninja
+      - name: Configure
+        run: |
+          LLVM="$(brew --prefix llvm)"
+          cmake -B build $CMAKE_FLAGS \
+            -DCMAKE_CXX_COMPILER="$LLVM/bin/clang++" \
+            -DCMAKE_EXE_LINKER_FLAGS="-L$LLVM/lib/c++ -L$LLVM/lib/unwind -lunwind -Wl,-rpath,$LLVM/lib/c++"
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  lint:
+    name: Format and clang-tidy
+    runs-on: ubuntu-24.04
+    container: fedora:44
+    steps:
+      - name: Install tools
+        run: >
+          dnf install -y --setopt=install_weak_deps=False
+          clang clang-tools-extra cmake ninja-build git
+      - uses: actions/checkout@v5
+      - name: Allow git to read the checkout
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Lint
+        run: tools/lint.sh

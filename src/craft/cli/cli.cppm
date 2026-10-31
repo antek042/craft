@@ -12,7 +12,7 @@ export namespace craft::cli {
 // name). Normal output goes to `out`, errors go to `err`.
 //
 // Returns the process exit code.
-[[nodiscard]] int Run(std::span<const std::string_view> args,
-                      std::ostream& out, std::ostream& err);
+[[nodiscard]] int Run(std::span<const std::string_view> args, std::ostream& out,
+                      std::ostream& err);
 
 }  // namespace craft::cli
