@@ -21,7 +21,7 @@ Goal: anyone can clone, build and test the project in under 5 minutes.
 
 Goal: a newcomer can create, build, run and test a project without writing CMake.
 
-- [ ] Manifest format `craft.toml` (name, version, C++ standard, targets)
+- [ ] Manifest format `craft.toml` (name, version, C++ standard, targets) — see [manifest.md](manifest.md)
 - [ ] `craft new <name>` / `craft init` — create a project skeleton
 - [ ] `craft build` — compile using the system compiler (debug / `--release`)
 - [ ] `craft run` — build and run the binary
