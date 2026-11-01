@@ -1,3 +1,4 @@
 export module craft.manifest;
 
-export import :parser; 
+export import :types;
+export import :parser;

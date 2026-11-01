@@ -33,6 +33,7 @@ target_sources(craft_lib
             craft/cli/cli.cppm
             craft/manifest/manifest.cppm
             craft/manifest/parser.cppm
+            craft/manifest/types.cppm
     PRIVATE
         craft/core/error.cc
         craft/cli/cli.cc)
