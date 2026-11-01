@@ -10,7 +10,8 @@ FetchContent_MakeAvailable(Catch2)
 # Unit tests: one executable with all of them.
 add_executable(craft_unit_tests
     unit/core/error_test.cc
-    unit/cli/cli_test.cc)
+    unit/cli/cli_test.cc
+    unit/manifest/parser_test.cc)
 
 # Exceptions to craft_warnings needed by test code. Linked after
 # craft_warnings so these flags come later on the command line and win.

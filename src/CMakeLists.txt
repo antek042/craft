@@ -36,7 +36,8 @@ target_sources(craft_lib
             craft/manifest/types.cppm
     PRIVATE
         craft/core/error.cc
-        craft/cli/cli.cc)
+        craft/cli/cli.cc
+        craft/manifest/parser.cc)
 target_link_libraries(craft_lib PRIVATE craft_warnings)
 
 add_executable(craft main.cc)
