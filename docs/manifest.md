@@ -122,7 +122,7 @@ src/craft/manifest/
 ├── types.cppm         # :types    — Manifest, Package, CppStandard
 ├── parser.cppm/.cc    # :parser   — Parse(text, path)
 ├── validate.cppm/.cc  # :validate — one function per rule
-└── loader.cppm/.cc    # :loader   — FindManifest(dir), Load(path)
+└── loader.cppm/.cc    # :loader   — FindManifest(dir), LoadManifest(path)
 ```
 
 When you change the format, update this document in the same pull request.
