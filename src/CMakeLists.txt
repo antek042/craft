@@ -31,6 +31,7 @@ target_sources(craft_lib
             craft/core/error.cppm
             ${CMAKE_CURRENT_BINARY_DIR}/generated/craft/core/version.cppm
             craft/cli/cli.cppm
+            craft/cli/read_manifest.cppm
             craft/manifest/manifest.cppm
             craft/manifest/loader.cppm
             craft/manifest/parser.cppm
@@ -38,6 +39,7 @@ target_sources(craft_lib
     PRIVATE
         craft/core/error.cc
         craft/cli/cli.cc
+        craft/cli/read_manifest.cc
         craft/manifest/loader.cc
         craft/manifest/parser.cc)
 target_link_libraries(craft_lib PRIVATE craft_warnings)

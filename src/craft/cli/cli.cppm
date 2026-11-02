@@ -6,6 +6,8 @@ module;
 
 export module craft.cli;
 
+export import :read_manifest;
+
 export namespace craft::cli {
 
 // Runs Craft with the given command-line arguments (without the program
