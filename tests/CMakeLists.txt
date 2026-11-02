@@ -43,3 +43,34 @@ set_tests_properties(integration.version PROPERTIES
 
 add_test(NAME integration.unknown_command COMMAND craft frobnicate)
 set_tests_properties(integration.unknown_command PROPERTIES WILL_FAIL TRUE)
+
+# `craft read-manifest` run inside the sample projects in tests/fixtures/.
+set(CRAFT_FIXTURES ${CMAKE_CURRENT_SOURCE_DIR}/fixtures)
+
+add_test(NAME integration.read_manifest.valid
+    COMMAND craft read-manifest
+    WORKING_DIRECTORY ${CRAFT_FIXTURES}/valid)
+set_tests_properties(integration.read_manifest.valid PROPERTIES
+    PASS_REGULAR_EXPRESSION
+        "^name = hello\r?\nversion = 0\\.1\\.0\r?\ncpp = 23\r?\n$")
+
+# A failing case needs two tests: with PASS_REGULAR_EXPRESSION CTest ignores
+# the exit code, so the exit code and the message are checked separately.
+function(add_read_manifest_failure name fixture message_regex)
+    add_test(NAME integration.read_manifest.${name}.exit_code
+        COMMAND craft read-manifest
+        WORKING_DIRECTORY ${CRAFT_FIXTURES}/${fixture})
+    set_tests_properties(integration.read_manifest.${name}.exit_code
+        PROPERTIES WILL_FAIL TRUE)
+
+    add_test(NAME integration.read_manifest.${name}.message
+        COMMAND craft read-manifest
+        WORKING_DIRECTORY ${CRAFT_FIXTURES}/${fixture})
+    set_tests_properties(integration.read_manifest.${name}.message
+        PROPERTIES PASS_REGULAR_EXPRESSION "${message_regex}")
+endfunction()
+
+add_read_manifest_failure(missing_package missing-package
+    "error: missing \\[package\\] section")
+add_read_manifest_failure(typo_in_key typo-key
+    "error: missing key `name` in \\[package\\]")

@@ -1,0 +1,4 @@
+[package]
+# "nmae" is a typo for "name".
+nmae = "hello"
+version = "0.1.0"

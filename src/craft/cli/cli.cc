@@ -8,6 +8,7 @@ module;
 module craft.cli;
 
 import craft.core;
+import :read_manifest;
 
 namespace craft::cli {
 namespace {
@@ -32,6 +33,9 @@ int Run(std::span<const std::string_view> args, std::ostream& out,
     if (args[0] == "-V" || args[0] == "--version") {
         out << "craft " << kVersion << "\n";
         return 0;
+    }
+    if (args[0] == "read-manifest") {
+        return ReadManifest(out, err);
     }
 
     const Error error("unknown command `" + std::string(args[0]) + "`",
