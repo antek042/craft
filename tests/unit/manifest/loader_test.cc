@@ -41,6 +41,10 @@ private:
 
 void Touch(const fs::path& file) { std::ofstream(file) << "[package]\n"; }
 
+void WriteFile(const fs::path& file, const std::string& text) {
+    std::ofstream(file, std::ios::binary) << text;
+}
+
 }  // namespace
 
 TEST_CASE("manifest is found in the starting directory", "[manifest]") {
@@ -102,3 +106,70 @@ TEST_CASE("missing manifest gives an error with a hint", "[manifest]") {
     CHECK(result.error().hint() ==
           "run `craft init` to create a new project here");
 }
+
+TEST_CASE("manifest is loaded and parsed", "[manifest]") {
+    const TempDir dir;
+    const fs::path file = dir.path() / "craft.toml";
+    WriteFile(file,
+              "[package]\n"
+              "name = \"hello\"\n"
+              "version = \"0.1.0\"\n");
+
+    const auto result = craft::manifest::LoadManifest(file);
+
+    REQUIRE(result.has_value());
+    CHECK(result->package.name == "hello");
+    CHECK(result->package.version == "0.1.0");
+}
+
+TEST_CASE("loading a missing file gives an error", "[manifest]") {
+    const TempDir dir;
+    const fs::path file = dir.path() / "craft.toml";
+
+    const auto result = craft::manifest::LoadManifest(file);
+
+    REQUIRE_FALSE(result.has_value());
+    CHECK(result.error().message().starts_with("could not read `" +
+                                               file.string() + "`"));
+}
+
+TEST_CASE("loading an empty file reports the missing section", "[manifest]") {
+    const TempDir dir;
+    const fs::path file = dir.path() / "craft.toml";
+    WriteFile(file, "");
+
+    const auto result = craft::manifest::LoadManifest(file);
+
+    REQUIRE_FALSE(result.has_value());
+    CHECK(result.error().message() == "missing [package] section");
+}
+
+TEST_CASE("parse errors point at the real file", "[manifest]") {
+    const TempDir dir;
+    const fs::path file = dir.path() / "craft.toml";
+    WriteFile(file, "[package\n");
+
+    const auto result = craft::manifest::LoadManifest(file);
+
+    REQUIRE_FALSE(result.has_value());
+    CHECK(result.error().Format().contains("--> " + file.string() + ":1:"));
+}
+
+#ifndef _WIN32
+TEST_CASE("loading an unreadable file gives an error with a hint",
+          "[manifest]") {
+    const TempDir dir;
+    const fs::path file = dir.path() / "craft.toml";
+    WriteFile(file, "[package]\n");
+    fs::permissions(file, fs::perms::none);
+    if (std::ifstream(file).is_open()) {
+        SKIP("permissions are not enforced (running as root?)");
+    }
+
+    const auto result = craft::manifest::LoadManifest(file);
+
+    REQUIRE_FALSE(result.has_value());
+    CHECK(result.error().message() == "could not open `" + file.string() + "`");
+    CHECK(result.error().hint().contains("permission"));
+}
+#endif

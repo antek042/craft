@@ -1,7 +1,10 @@
 module;
 
+#include <cstdint>
 #include <expected>
 #include <filesystem>
+#include <fstream>
+#include <ios>
 #include <string>
 #include <string_view>
 #include <system_error>
@@ -56,6 +59,38 @@ std::expected<std::filesystem::path, Error> FindManifest(
         Error("could not find `" + std::string(kManifestName) + "` in `" +
                   start_dir.string() + "` or any parent directory",
               "run `craft init` to create a new project here"));
+}
+
+std::expected<Manifest, Error> LoadManifest(
+    const std::filesystem::path& manifest_path) {
+    namespace fs = std::filesystem;
+    const std::string path_string = manifest_path.string();
+    std::error_code ec;
+
+    // Knowing the size up front lets us detect a short read, which reading
+    // through rdbuf() would hide.
+    const std::uintmax_t size = fs::file_size(manifest_path, ec);
+    if (ec) {
+        return std::unexpected(
+            Error("could not read `" + path_string + "`: " + ec.message()));
+    }
+
+    // Binary mode, so that line endings (and error columns) are the same on
+    // every platform.
+    std::ifstream file(manifest_path, std::ios::binary);
+    if (!file) {
+        return std::unexpected(
+            Error("could not open `" + path_string + "`",
+                  "check that you have permission to read the file"));
+    }
+
+    std::string text(size, '\0');
+    file.read(text.data(), static_cast<std::streamsize>(size));
+    if (file.gcount() != static_cast<std::streamsize>(size)) {
+        return std::unexpected(Error("could not read `" + path_string + "`"));
+    }
+
+    return Parse(text, manifest_path);
 }
 
 }  // namespace craft::manifest
