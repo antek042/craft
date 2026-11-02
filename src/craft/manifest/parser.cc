@@ -17,8 +17,8 @@ namespace {
 
 ErrorLocation LocationOf(const std::string& path,
                          const toml::source_position& position) {
-    return ErrorLocation(path, static_cast<unsigned int>(position.line),
-                         static_cast<unsigned int>(position.column));
+    return {path, static_cast<unsigned int>(position.line),
+            static_cast<unsigned int>(position.column)};
 }
 
 // Reads a required string value from [package], e.g. `name = "hello"`.
@@ -68,7 +68,7 @@ std::expected<Manifest, Error> Parse(std::string_view text,
                   LocationOf(path_string, package_node->source().begin)));
     }
 
-    // TODO: reject unknown keys and sections (separate issue).
+    // TODO(antek042): reject unknown keys and sections (separate issue).
     Manifest manifest;
 
     auto name = ReadRequiredString(*package, "name", path_string);
