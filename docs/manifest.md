@@ -58,14 +58,9 @@ number, so `cpp = 23` is an error with a hint to write `cpp = "23"`.
 
 ## Targets
 
-Craft finds targets by convention, so there is nothing to configure:
-
-| File               | Target                                   |
-|--------------------|------------------------------------------|
-| `src/main.cc`      | executable named after the package       |
-| `src/lib.cppm`     | library (a C++ module named after the package) |
-
-A package can have both. If neither exists, `craft build` reports an error.
+Craft finds targets by convention, so there is nothing to configure: `src/main.*`
+is a program and `src/lib.*` is a library. The full rules (extra programs, tests,
+headers, modules) are on the [project conventions](conventions.md) page.
 
 Module names can't contain `-`, so in the library's module name dashes become
 underscores: package `my-lib` exports module `my_lib`.
