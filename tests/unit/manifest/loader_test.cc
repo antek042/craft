@@ -6,43 +6,14 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "temp_dir.h"
+
 import craft.core;
 import craft.manifest;
 
 namespace {
 
 namespace fs = std::filesystem;
-
-// A fresh temporary directory, removed when the test ends.
-class TempDir {
-public:
-    TempDir() {
-        static int counter = 0;
-        // Not file_time_type::clock: its tick type differs between standard
-        // libraries (libc++ uses __int128, which std::to_string can't take).
-        const auto nanoseconds =
-            std::chrono::duration_cast<std::chrono::nanoseconds>(
-                std::chrono::system_clock::now().time_since_epoch())
-                .count();
-        path_ = fs::temp_directory_path() /
-                ("craft_loader_test_" + std::to_string(counter++) + "_" +
-                 std::to_string(nanoseconds));
-        fs::create_directories(path_);
-        // Resolve symlinks (e.g. /tmp on macOS) so paths compare equal.
-        path_ = fs::canonical(path_);
-    }
-    ~TempDir() {
-        std::error_code ec;
-        fs::remove_all(path_, ec);
-    }
-    TempDir(const TempDir&) = delete;
-    TempDir& operator=(const TempDir&) = delete;
-
-    [[nodiscard]] const fs::path& path() const { return path_; }
-
-private:
-    fs::path path_;
-};
 
 void Touch(const fs::path& file) { std::ofstream(file) << "[package]\n"; }
 

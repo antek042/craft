@@ -2,6 +2,7 @@ module;
 
 #include <expected>
 #include <filesystem>
+#include <string_view>
 
 export module craft.manifest:loader;
 
@@ -9,6 +10,8 @@ import craft.core;
 import :types;
 
 export namespace craft::manifest {
+
+inline constexpr std::string_view kManifestName = "craft.toml";
 
 // Looks for `craft.toml` in `start` and then in each parent directory.
 // `start` can be a directory or a file inside the project.

@@ -11,8 +11,14 @@ FetchContent_MakeAvailable(Catch2)
 add_executable(craft_unit_tests
     unit/core/error_test.cc
     unit/cli/cli_test.cc
+    unit/cli/create_project_test.cc
+    unit/cli/init_test.cc
+    unit/manifest/default_manifest_test.cc
     unit/manifest/loader_test.cc
+    unit/manifest/name_test.cc
     unit/manifest/parser_test.cc)
+
+target_include_directories(craft_unit_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/unit)
 
 # Exceptions to craft_warnings needed by test code. Linked after
 # craft_warnings so these flags come later on the command line and win.
