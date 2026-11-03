@@ -8,6 +8,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "temp_dir.h"
+
 import craft.cli;
 import craft.core;
 import craft.manifest;
@@ -15,34 +17,6 @@ import craft.manifest;
 namespace {
 
 namespace fs = std::filesystem;
-
-// A fresh temporary directory, removed when the test ends.
-class TempDir {
-public:
-    TempDir() {
-        static int counter = 0;
-        const auto nanoseconds =
-            std::chrono::duration_cast<std::chrono::nanoseconds>(
-                std::chrono::system_clock::now().time_since_epoch())
-                .count();
-        path_ = fs::temp_directory_path() /
-                ("craft_create_project_test_" + std::to_string(counter++) +
-                 "_" + std::to_string(nanoseconds));
-        fs::create_directories(path_);
-        path_ = fs::canonical(path_);
-    }
-    ~TempDir() {
-        std::error_code ec;
-        fs::remove_all(path_, ec);
-    }
-    TempDir(const TempDir&) = delete;
-    TempDir& operator=(const TempDir&) = delete;
-
-    [[nodiscard]] const fs::path& path() const { return path_; }
-
-private:
-    fs::path path_;
-};
 
 std::string ReadFile(const fs::path& file) {
     std::ifstream in(file, std::ios::binary);

@@ -126,7 +126,7 @@ std::expected<CreatedProject, Error> CreateProject(
             fs::remove(file, ignored);
         }
         if (created_src_dir) {
-            fs::remove(src_dir, ignored); 
+            fs::remove(src_dir, ignored);
         }
         return std::unexpected(std::move(error));
     };
