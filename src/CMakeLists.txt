@@ -32,6 +32,7 @@ target_sources(craft_lib
             ${CMAKE_CURRENT_BINARY_DIR}/generated/craft/core/version.cppm
             craft/cli/cli.cppm
             craft/cli/read_manifest.cppm
+            craft/cli/create_project.cppm
             craft/manifest/manifest.cppm
             craft/manifest/default_manifest.cppm
             craft/manifest/loader.cppm
@@ -42,6 +43,7 @@ target_sources(craft_lib
         craft/core/error.cc
         craft/cli/cli.cc
         craft/cli/read_manifest.cc
+        craft/cli/create_project.cc
         craft/manifest/default_manifest.cc
         craft/manifest/loader.cc
         craft/manifest/name.cc

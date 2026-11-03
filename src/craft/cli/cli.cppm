@@ -7,6 +7,7 @@ module;
 export module craft.cli;
 
 export import :read_manifest;
+export import :create_project;
 
 export namespace craft::cli {
 

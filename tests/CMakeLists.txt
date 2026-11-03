@@ -11,6 +11,7 @@ FetchContent_MakeAvailable(Catch2)
 add_executable(craft_unit_tests
     unit/core/error_test.cc
     unit/cli/cli_test.cc
+    unit/cli/create_project_test.cc
     unit/manifest/default_manifest_test.cc
     unit/manifest/loader_test.cc
     unit/manifest/name_test.cc

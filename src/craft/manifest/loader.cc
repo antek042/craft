@@ -15,11 +15,6 @@ module craft.manifest;
 import craft.core;
 
 namespace craft::manifest {
-namespace {
-
-constexpr std::string_view kManifestName = "craft.toml";
-
-}  // namespace
 
 std::expected<std::filesystem::path, Error> FindManifest(
     const std::filesystem::path& start) {
