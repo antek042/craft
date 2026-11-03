@@ -12,6 +12,7 @@ add_executable(craft_unit_tests
     unit/core/error_test.cc
     unit/cli/cli_test.cc
     unit/manifest/loader_test.cc
+    unit/manifest/name_test.cc
     unit/manifest/parser_test.cc)
 
 # Exceptions to craft_warnings needed by test code. Linked after

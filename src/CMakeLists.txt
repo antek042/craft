@@ -35,12 +35,14 @@ target_sources(craft_lib
             craft/manifest/manifest.cppm
             craft/manifest/loader.cppm
             craft/manifest/parser.cppm
+            craft/manifest/name.cppm
             craft/manifest/types.cppm
     PRIVATE
         craft/core/error.cc
         craft/cli/cli.cc
         craft/cli/read_manifest.cc
         craft/manifest/loader.cc
+        craft/manifest/name.cc
         craft/manifest/parser.cc)
 target_link_libraries(craft_lib PRIVATE craft_warnings)
 
