@@ -59,3 +59,18 @@ TEST_CASE("unknown command fails with a hint", "[cli]") {
     CHECK(result.err.contains("error: unknown command `frobnicate`"));
     CHECK(result.err.contains("hint: run `craft --help`"));
 }
+
+TEST_CASE("help lists the build command", "[cli]") {
+    const RunResult result = RunCraft({"--help"});
+
+    CHECK(result.out.contains("build "));
+    CHECK(result.out.contains("--release"));
+}
+
+TEST_CASE("build with an unknown flag fails", "[cli]") {
+    const RunResult result = RunCraft({"build", "--fast"});
+
+    CHECK(result.exit_code == 1);
+    CHECK(result.out.empty());
+    CHECK(result.err.contains("error: unknown flag `--fast`"));
+}

@@ -13,6 +13,7 @@ add_executable(craft_unit_tests
     unit/build/cmake_backend_test.cc
     unit/build/discover_targets_test.cc
     unit/core/error_test.cc
+    unit/cli/build_test.cc
     unit/cli/cli_test.cc
     unit/cli/create_project_test.cc
     unit/cli/init_test.cc
