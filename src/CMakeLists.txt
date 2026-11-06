@@ -42,6 +42,7 @@ target_sources(craft_lib
             craft/manifest/types.cppm
             craft/build/build.cppm
             craft/build/discover_targets.cppm
+            craft/build/generate_cmake.cppm
     PRIVATE
         craft/core/error.cc
         craft/cli/cli.cc
@@ -52,7 +53,9 @@ target_sources(craft_lib
         craft/manifest/loader.cc
         craft/manifest/name.cc
         craft/manifest/parser.cc
-        craft/build/discover_targets.cc)
+        craft/build/discover_targets.cc
+        craft/build/generate_cmake.cc
+        craft/build/cmake_text.cc)
 target_link_libraries(craft_lib PRIVATE craft_warnings)
 
 add_executable(craft main.cc)
