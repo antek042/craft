@@ -9,6 +9,8 @@ FetchContent_MakeAvailable(Catch2)
 
 # Unit tests: one executable with all of them.
 add_executable(craft_unit_tests
+    unit/build/cmake_text_test.cc
+    unit/build/generate_cmake_test.cc
     unit/build/discover_targets_test.cc
     unit/core/error_test.cc
     unit/cli/cli_test.cc
