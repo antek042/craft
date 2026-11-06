@@ -43,6 +43,10 @@ target_sources(craft_lib
             craft/build/build.cppm
             craft/build/discover_targets.cppm
             craft/build/cmake_backend.cppm
+            craft/util/util.cppm
+            craft/util/find_in_path.cppm
+            craft/util/run_process.cppm
+            craft/util/run_process.cppm
     PRIVATE
         craft/core/error.cc
         craft/cli/cli.cc
@@ -55,7 +59,9 @@ target_sources(craft_lib
         craft/manifest/parser.cc
         craft/build/discover_targets.cc
         craft/build/cmake_backend.cc
-        craft/build/cmake_text.cc)
+        craft/build/cmake_text.cc
+        craft/util/find_in_path.cc
+        craft/util/run_process.cc)
 target_link_libraries(craft_lib PRIVATE craft_warnings)
 
 add_executable(craft main.cc)

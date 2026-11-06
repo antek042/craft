@@ -16,6 +16,8 @@ add_executable(craft_unit_tests
     unit/cli/cli_test.cc
     unit/cli/create_project_test.cc
     unit/cli/init_test.cc
+    unit/util/find_in_path_test.cc
+    unit/util/run_process_test.cc
     unit/manifest/default_manifest_test.cc
     unit/manifest/loader_test.cc
     unit/manifest/name_test.cc

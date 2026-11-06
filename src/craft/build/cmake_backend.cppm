@@ -41,6 +41,8 @@ public:
     virtual std::expected<void, Error> Generate(
         const manifest::Manifest& manifest, const Targets& targets,
         const BuildOptions& options) = 0;
+    // Builds the project prepared by Generate. The output of the build goes
+    // straight to the user. The program ends up in target/<profile>/.
     virtual std::expected<void, Error> Build(const BuildOptions& options) = 0;
 };
 
