@@ -6,7 +6,7 @@ module;
 #include <string>
 #include <string_view>
 
-export module craft.build:generate_cmake;
+export module craft.build:cmake_backend;
 import craft.core;
 import craft.manifest;
 import :discover_targets;

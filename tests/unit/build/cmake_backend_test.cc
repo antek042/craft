@@ -89,7 +89,7 @@ TEST_CASE("WriteIfChanged reports a path it can't write",
 }
 
 TEST_CASE("Generate writes target/cmake/CMakeLists.txt",
-          "[build][generate_cmake]") {
+          "[build][cmake_backend]") {
     const TempDir dir;
     craft::build::CMakeBackend backend;
     const craft::build::BuildOptions options{.root = dir.path()};
@@ -104,7 +104,7 @@ TEST_CASE("Generate writes target/cmake/CMakeLists.txt",
                       craft::build::Profile::kDebug));
 }
 
-TEST_CASE("Generate twice gives the same file", "[build][generate_cmake]") {
+TEST_CASE("Generate twice gives the same file", "[build][cmake_backend]") {
     const TempDir dir;
     craft::build::CMakeBackend backend;
     const craft::build::BuildOptions options{.root = dir.path()};
