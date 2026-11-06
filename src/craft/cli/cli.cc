@@ -8,6 +8,7 @@ module;
 module craft.cli;
 
 import craft.core;
+import :build;
 import :init;
 import :read_manifest;
 
@@ -20,6 +21,10 @@ Usage: craft [OPTIONS] [COMMAND]
 
 Commands:
     init             Create a new project in the current directory
+    build            Build the project in the current directory
+
+Build options:
+    --release        Build with optimizations (default: debug)
 
 Options:
     -h, --help       Print help
@@ -47,6 +52,9 @@ int Run(std::span<const std::string_view> args, std::ostream& out,
             return 1;
         }
         return InitProject(out, err);
+    }
+    if (args[0] == "build") {
+        return BuildProject(args.subspan(1), out, err);
     }
     if (args[0] == "read-manifest") {
         return ReadManifest(out, err);

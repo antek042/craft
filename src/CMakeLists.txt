@@ -34,6 +34,7 @@ target_sources(craft_lib
             craft/cli/read_manifest.cppm
             craft/cli/create_project.cppm
             craft/cli/init.cppm
+            craft/cli/build.cppm
             craft/manifest/manifest.cppm
             craft/manifest/default_manifest.cppm
             craft/manifest/loader.cppm
@@ -51,6 +52,7 @@ target_sources(craft_lib
         craft/core/error.cc
         craft/cli/cli.cc
         craft/cli/init.cc
+        craft/cli/build.cc
         craft/cli/read_manifest.cc
         craft/cli/create_project.cc
         craft/manifest/default_manifest.cc
